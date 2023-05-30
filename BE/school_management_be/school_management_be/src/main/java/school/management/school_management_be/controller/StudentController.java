@@ -22,6 +22,7 @@ import school.management.school_management_be.service.StudentService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class StudentController {
     @Autowired
     StudentService studentService;

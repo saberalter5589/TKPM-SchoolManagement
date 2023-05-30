@@ -12,6 +12,7 @@ import school.management.school_management_be.dto.request.sclass.CreateClassRequ
 import school.management.school_management_be.dto.request.sclass.GetClassRequest;
 import school.management.school_management_be.dto.request.subject.CreateSubjectRequest;
 import school.management.school_management_be.dto.request.subject.GetSubjectRequest;
+import school.management.school_management_be.dto.request.user.DeleteUserRequest;
 import school.management.school_management_be.dto.response.SuccessResponse;
 import school.management.school_management_be.dto.response.classtype.CreateClassTypeResponse;
 import school.management.school_management_be.dto.response.sclass.CreateClassResponse;
@@ -23,6 +24,7 @@ import school.management.school_management_be.service.ClassService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class ClassController {
     @Autowired
     ClassService classService;
@@ -64,7 +66,12 @@ public class ClassController {
     }
 
     @DeleteMapping("/class/{id}")
-    public ResponseEntity<SuccessResponse> deleteClass(@PathVariable("id") Long id, @RequestBody BaseRequest request){
+    public ResponseEntity<SuccessResponse> deleteClass(@PathVariable("id") Long id,
+                                                       @RequestHeader("userId") Long userId,
+                                                       @RequestHeader("password") String password){
+        BaseRequest request = new BaseRequest();
+        request.getAuthentication().setUserId(userId);
+        request.getAuthentication().setPassword(password);
         authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
         classService.deleteClass(id, request);
         return new ResponseEntity<>(new SuccessResponse(), HttpStatus.OK);

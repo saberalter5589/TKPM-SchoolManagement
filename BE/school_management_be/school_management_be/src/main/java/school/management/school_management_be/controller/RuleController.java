@@ -19,6 +19,7 @@ import school.management.school_management_be.service.RuleService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class RuleController {
     @Autowired
     RuleService ruleService;

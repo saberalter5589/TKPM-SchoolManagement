@@ -21,6 +21,7 @@ import school.management.school_management_be.service.ClassTypeService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class ClassTypeController {
     @Autowired
     ClassTypeService classTypeService;
@@ -39,6 +40,7 @@ public class ClassTypeController {
             @RequestHeader("userId") Long userId,
             @RequestHeader("password") String password,
             @RequestParam(value = "classTypeId", required = false) Long classTypeId,
+            @RequestParam(value = "classIndex", required = false) Long classIndex,
             @RequestParam(value="classTypeCode", required = false) String classTypeCode,
             @RequestParam(value="classTypeName", required = false) String classTypeName){
         GetClassTypeRequest request = new GetClassTypeRequest();
@@ -47,7 +49,8 @@ public class ClassTypeController {
         request.setClassTypeId(classTypeId);
         request.setClassTypeCode(classTypeCode);
         request.setClassTypeName(classTypeName);
-        authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN));
+        request.setClassIndex(classIndex);
+        authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN , UserRole.STAFF));
         GetClassTypeResponse response = classTypeService.searchClassType(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -60,7 +63,12 @@ public class ClassTypeController {
     }
 
     @DeleteMapping("/class-type/{id}")
-    public ResponseEntity<SuccessResponse> deleteUser(@PathVariable("id") Long id, @RequestBody BaseRequest request){
+    public ResponseEntity<SuccessResponse> deleteUser(@PathVariable("id") Long id,
+                                                      @RequestHeader("userId") Long userId,
+                                                      @RequestHeader("password") String password){
+        BaseRequest request = new BaseRequest();
+        request.getAuthentication().setUserId(userId);
+        request.getAuthentication().setPassword(password);
         authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
         classTypeService.deleteClassType(id);
         return new ResponseEntity<>(new SuccessResponse(), HttpStatus.OK);

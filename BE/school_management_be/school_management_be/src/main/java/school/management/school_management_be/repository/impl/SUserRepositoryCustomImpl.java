@@ -3,6 +3,7 @@ package school.management.school_management_be.repository.impl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import school.management.school_management_be.common.UserRole;
 import school.management.school_management_be.dto.request.user.GetUserRequest;
 import school.management.school_management_be.repository.SUserRepositoryCustom;
 import school.management.school_management_be.util.CommonUtil;
@@ -19,9 +20,11 @@ public class SUserRepositoryCustomImpl implements SUserRepositoryCustom {
     public List<Object[]> searchUser(GetUserRequest request) {
         HashMap<String, Object> params = new HashMap<>();
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT su.user_id, su.u_role, su.user_name, su.first_name, su.last_name, su.email ");
+        sql.append("SELECT su.user_id, su.u_role, su.user_name, su.first_name, su.last_name, su.email, su.password ");
         sql.append("FROM s_user su ");
         sql.append("WHERE su.is_deleted = false ");
+
+        sql.append("AND su.u_role != '0' ");
 
         if(request.getUserId() != null){
             sql.append("AND su.user_id =:id ");

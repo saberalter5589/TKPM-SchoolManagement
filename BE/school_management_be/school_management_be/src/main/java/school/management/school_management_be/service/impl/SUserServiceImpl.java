@@ -65,7 +65,7 @@ public class SUserServiceImpl implements SUserService {
             MessageInfo messageInfo = MessageUtil.formatMessage(10001, "userId");
             throw new NoDataFoundException(messageInfo);
         }
-
+        user.setPassword(request.getPassword());
         user.setLastName(request.getLastName());
         user.setFirstName(request.getFirstName());
         user.setEmail(request.getEmail());

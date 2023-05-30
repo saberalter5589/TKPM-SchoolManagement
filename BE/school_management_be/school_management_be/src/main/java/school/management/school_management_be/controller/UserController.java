@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import school.management.school_management_be.common.UserRole;
+import school.management.school_management_be.dto.request.BaseRequest;
 import school.management.school_management_be.dto.request.user.CreateUserRequest;
 import school.management.school_management_be.dto.request.user.DeleteUserRequest;
 import school.management.school_management_be.dto.request.user.GetUserRequest;
@@ -18,6 +19,7 @@ import school.management.school_management_be.service.SUserService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
     SUserService sUserService;
@@ -62,7 +64,12 @@ public class UserController {
     }
 
     @DeleteMapping("/staff/{id}")
-    public ResponseEntity<SuccessResponse> deleteUser(@PathVariable("id") Long id, @RequestBody DeleteUserRequest request){
+    public ResponseEntity<SuccessResponse> deleteUser(@PathVariable("id") Long id,
+                                                      @RequestHeader("userId") Long userId,
+                                                      @RequestHeader("password") String password){
+        DeleteUserRequest request = new DeleteUserRequest();
+        request.getAuthentication().setUserId(userId);
+        request.getAuthentication().setPassword(password);
         authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
         sUserService.deleteUser(id);
         return new ResponseEntity<>(new SuccessResponse(), HttpStatus.OK);

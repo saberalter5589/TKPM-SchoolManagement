@@ -42,6 +42,7 @@ public class UserDxo {
         dto.setFirstName(obj[3] != null ? ObjectUtil.getValueOfString(obj[3]) : null);
         dto.setLastName(obj[4] != null ? ObjectUtil.getValueOfString(obj[4]) : null);
         dto.setEmail(obj[5] != null ? ObjectUtil.getValueOfString(obj[5]) : null);
+        dto.setPassword(obj[6] != null ? ObjectUtil.getValueOfString(obj[6]) : null);
         return dto;
     }
 }

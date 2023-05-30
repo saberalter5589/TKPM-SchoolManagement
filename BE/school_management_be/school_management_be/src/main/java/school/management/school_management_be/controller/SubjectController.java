@@ -23,6 +23,7 @@ import school.management.school_management_be.service.SubjectService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class SubjectController {
     @Autowired
     SubjectService subjectService;
@@ -62,7 +63,11 @@ public class SubjectController {
     }
 
     @DeleteMapping("/subject/{id}")
-    public ResponseEntity<SuccessResponse> deleteUser(@PathVariable("id") Long id, @RequestBody BaseRequest request){
+    public ResponseEntity<SuccessResponse> deleteUser(@PathVariable("id") Long id,@RequestHeader("userId") Long userId,
+                                                      @RequestHeader("password") String password){
+        BaseRequest request = new BaseRequest();
+        request.getAuthentication().setUserId(userId);
+        request.getAuthentication().setPassword(password);
         authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN));
         subjectService.deleteSubject(id);
         return new ResponseEntity<>(new SuccessResponse(), HttpStatus.OK);

@@ -30,6 +30,11 @@ public class ClassTypeRepositoryCustomImpl implements ClassTypeRepositoryCustom 
             params.put("id", request.getClassTypeId());
         }
 
+        if(request.getClassIndex() != null){
+            sql.append("AND ct.class_index =:classIndex ");
+            params.put("classIndex", request.getClassIndex());
+        }
+
         if(!CommonUtil.isNullOrWhitespace(request.getClassTypeCode())){
             sql.append("AND ct.class_type_code LIKE :classTypeCode ");
             params.put("classTypeCode", "%" + request.getClassTypeCode() + "%");

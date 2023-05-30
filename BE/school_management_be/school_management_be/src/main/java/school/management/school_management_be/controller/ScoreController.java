@@ -20,6 +20,7 @@ import school.management.school_management_be.service.ScoreService;
 import java.util.Arrays;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class ScoreController {
     @Autowired
     ScoreService scoreService;
