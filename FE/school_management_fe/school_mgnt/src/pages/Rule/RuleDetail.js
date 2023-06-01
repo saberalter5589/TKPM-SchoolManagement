@@ -74,7 +74,7 @@ const RuleDetail = () => {
       <form onSubmit={handleSubmit}>
         <div className="card">
           <div className="card-header">
-            <h1>Edit Rule</h1>
+            <h1>Rule management</h1>
           </div>
           <div className="card-body">
             <div className="row">

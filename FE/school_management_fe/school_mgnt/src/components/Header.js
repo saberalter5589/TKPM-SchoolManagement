@@ -55,6 +55,16 @@ const Header = (props) => {
             class: "nav-link",
           },
           {
+            to: "/student",
+            name: "Student",
+            class: "nav-link",
+          },
+          {
+            to: "/class-statistic",
+            name: "Statistic",
+            class: "nav-link",
+          },
+          {
             to: "/login",
             name: "Logout",
             class: "nav-link",

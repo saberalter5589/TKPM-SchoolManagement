@@ -119,7 +119,7 @@ const ClassDetail = () => {
             </div>
             <div className="card-body">
               <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-4">
                   <div className="form-group">
                     <label>Class Id</label>
                     <input
@@ -129,7 +129,7 @@ const ClassDetail = () => {
                     ></input>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-4">
                   <div className="form-group">
                     <label>Class Code</label>
                     <input
@@ -139,9 +139,7 @@ const ClassDetail = () => {
                     ></input>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-8">
+                <div className="col-lg-4">
                   <div className="form-group">
                     <label>Class Name</label>
                     <input
@@ -151,6 +149,8 @@ const ClassDetail = () => {
                     ></input>
                   </div>
                 </div>
+              </div>
+              <div className="row">
                 <div className="col-lg-4">
                   <div className="form-group">
                     <label>Class Type</label>

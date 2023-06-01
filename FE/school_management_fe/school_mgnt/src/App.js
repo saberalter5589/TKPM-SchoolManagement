@@ -17,6 +17,11 @@ import SubjectDetail from "./pages/Subject/SubjectDetail";
 import RuleDetail from "./pages/Rule/RuleDetail";
 import Class from "./pages/Class/Class";
 import ClassDetail from "./pages/Class/ClassDetail";
+import Student from "./pages/Student/Student";
+import StudentDetail from "./pages/Student/StudentDetail";
+import ScoreDetail from "./pages/Student/ScoreDetail";
+import ClassStatistic from "./pages/Statistic/ClassStatistic";
+import StudentStatistic from "./pages/Statistic/StudentStatistic";
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -44,6 +49,11 @@ function App() {
           <Route path="/rule" element={<RuleDetail />} />
           <Route path="/class" element={<Class />} />
           <Route path="/class-detail/:id" element={<ClassDetail />} />
+          <Route path="/student" element={<Student />} />
+          <Route path="/student-detail/:id" element={<StudentDetail />} />
+          <Route path="/score-detail/:id" element={<ScoreDetail />} />
+          <Route path="/class-statistic/" element={<ClassStatistic />} />
+          <Route path="/student-statistic/:id" element={<StudentStatistic />} />
         </Routes>
       </BrowserRouter>
     </div>

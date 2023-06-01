@@ -50,7 +50,7 @@ public class SubjectController {
         request.setSubjectId(subjectId);
         request.setSubjectCode(subjectCode);
         request.setSubjectName(subjectName);
-        authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN));
+        authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
         GetSubjectResponse response = subjectService.searchSubject(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -35,6 +35,7 @@ public class StudentDxo {
         classDto.setClassCode(obj[2] != null ? ObjectUtil.getValueOfString(obj[2]) : null);
         classDto.setClassName(obj[3] != null ? ObjectUtil.getValueOfString(obj[3]) : null);
         classDto.setMaxStudentNum(obj[4] != null ? ObjectUtil.getValueOfLong(obj[4]) : null);
+        dto.setClassDto(classDto);
 
         dto.setFirstName(obj[5] != null ? ObjectUtil.getValueOfString(obj[5]) : null);
         dto.setLastName(obj[6] != null ? ObjectUtil.getValueOfString(obj[6]) : null);

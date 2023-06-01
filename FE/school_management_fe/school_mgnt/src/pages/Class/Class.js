@@ -99,7 +99,7 @@ const Class = () => {
       <form onSubmit={handleSearch}>
         <div className="card">
           <div className="card-header">
-            <h1>Search Class</h1>
+            <h1>Class management</h1>
           </div>
           <div className="card-body">
             <div className="row">

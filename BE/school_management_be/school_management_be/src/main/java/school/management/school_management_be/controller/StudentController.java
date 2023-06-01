@@ -72,7 +72,11 @@ public class StudentController {
     }
 
     @DeleteMapping("/student/{id}")
-    public ResponseEntity<SuccessResponse> deleteStudent(@PathVariable("id") Long id, @RequestBody BaseRequest request){
+    public ResponseEntity<SuccessResponse> deleteStudent(@PathVariable("id") Long id, @RequestHeader("userId") Long userId,
+                                                         @RequestHeader("password") String password){
+        BaseRequest request = new BaseRequest();
+        request.getAuthentication().setUserId(userId);
+        request.getAuthentication().setPassword(password);
         authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
         studentService.deleteStudent(id, request);
         return new ResponseEntity<>(new SuccessResponse(), HttpStatus.OK);

@@ -75,7 +75,7 @@ const ClassType = () => {
       <form onSubmit={handleSearch}>
         <div className="card">
           <div className="card-header">
-            <h1>Search Class Type</h1>
+            <h1>Class Type management</h1>
           </div>
           <div className="card-body">
             <div className="row">
@@ -133,7 +133,7 @@ const ClassType = () => {
           </div>
         </div>
       </form>
-      <h2>Staff List</h2>
+      <h2>Class Type List</h2>
       <div className="py-4">
         <table className="table border shadow">
           <thead>

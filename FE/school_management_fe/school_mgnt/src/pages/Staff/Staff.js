@@ -77,7 +77,7 @@ const Staff = () => {
       <form onSubmit={handleSearch}>
         <div className="card">
           <div className="card-header">
-            <h1>Search staff</h1>
+            <h1>Staff Management</h1>
           </div>
           <div className="card-body">
             <div className="row">
