@@ -17,7 +17,7 @@ const Home = () => {
         return (
           <>
             <h1>This page is for Admin member of school</h1>
-            <h4>Staff can manage: Rule, Staff, Class Type, Subject</h4>
+            <h4>Admin can manage: Rule, Staff, Class Type, Subject</h4>
           </>
         );
 

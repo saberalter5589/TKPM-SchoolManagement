@@ -128,6 +128,7 @@ const StaffDetail = () => {
                     <label>Password</label>
                     <input
                       value={password}
+                      type="password"
                       onChange={(e) => setPassword(e.target.value)}
                       className="form-control"
                     ></input>
