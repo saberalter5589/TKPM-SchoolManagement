@@ -15,6 +15,11 @@ const RuleDetail = () => {
   const [finalExamRate, setFinalExamRate] = useState();
   const [firstSemRate, setFirstSemRate] = useState();
   const [secondSemRate, setSecondSemRate] = useState();
+  const [badAvg, setBadAvg] = useState();
+  const [avgAvg, setAvgAvg] = useState();
+  const [goodAvg, setGoodAvg] = useState();
+  const [veryGoodAvg, setVeryGoodgAvg] = useState();
+  const [excellentAvg, setExcellentAvg] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +48,11 @@ const RuleDetail = () => {
     setFinalExamRate(rule?.finalExamRate);
     setFirstSemRate(rule?.firstSemRate);
     setSecondSemRate(rule?.secondSemRate);
+    setBadAvg(rule?.badAverage);
+    setAvgAvg(rule?.avgAverage);
+    setGoodAvg(rule?.goodAverage);
+    setVeryGoodgAvg(rule?.veryGoodAverage);
+    setExcellentAvg(rule?.excellentAverage);
   };
 
   const handleSubmit = async (e) => {
@@ -60,6 +70,11 @@ const RuleDetail = () => {
         finalExamRate: finalExamRate,
         firstSemRate: firstSemRate,
         secondSemRate: secondSemRate,
+        badAverage: badAvg,
+        avgAverage: avgAvg,
+        goodAverage: goodAvg,
+        veryGoodAverage: veryGoodAvg,
+        excellentAverage: excellentAvg,
       };
       const res = await axios.put(`http://localhost:8080/api/rule`, payload);
       if (res.status == 200) {
@@ -78,6 +93,7 @@ const RuleDetail = () => {
           </div>
           <div className="card-body">
             <div className="row">
+              <h3>Age setting</h3>
               <div className="col-lg-6">
                 <div className="form-group">
                   <label>Min Age</label>
@@ -104,6 +120,7 @@ const RuleDetail = () => {
               </div>
             </div>
             <div className="row">
+              <h3>Test setting</h3>
               <div className="col-lg-4">
                 <div className="form-group">
                   <label>Test 15 rate</label>
@@ -144,6 +161,7 @@ const RuleDetail = () => {
               </div>
             </div>
             <div className="row">
+              <h3>Semeter setting</h3>
               <div className="col-lg-6">
                 <div className="form-group">
                   <label>First Semester Rate</label>
@@ -165,6 +183,73 @@ const RuleDetail = () => {
                     className="form-control"
                     type="number"
                     min="1"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <h3>Rank setting</h3>
+              <div className="col-lg-2">
+                <div className="form-group">
+                  <label>Bad: </label>
+                  <input
+                    value={badAvg}
+                    onChange={(e) => setBadAvg(e.target.value)}
+                    className="form-control"
+                    step="0.01"
+                    type="number"
+                    min="0"
+                  />
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className="form-group">
+                  <label>Average: </label>
+                  <input
+                    value={avgAvg}
+                    onChange={(e) => setAvgAvg(e.target.value)}
+                    className="form-control"
+                    step="0.01"
+                    min="0"
+                  />
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className="form-group">
+                  <label>Good: </label>
+                  <input
+                    value={goodAvg}
+                    onChange={(e) => setGoodAvg(e.target.value)}
+                    className="form-control"
+                    step="0.01"
+                    type="number"
+                    min="0"
+                  />
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className="form-group">
+                  <label>Very Good: </label>
+                  <input
+                    value={veryGoodAvg}
+                    onChange={(e) => setVeryGoodgAvg(e.target.value)}
+                    className="form-control"
+                    step="0.01"
+                    type="number"
+                    min="0"
+                  />
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className="form-group">
+                  <label>Excellent: </label>
+                  <input
+                    value={excellentAvg}
+                    onChange={(e) => setExcellentAvg(e.target.value)}
+                    className="form-control"
+                    step="0.01"
+                    type="number"
+                    min="0"
                   />
                 </div>
               </div>

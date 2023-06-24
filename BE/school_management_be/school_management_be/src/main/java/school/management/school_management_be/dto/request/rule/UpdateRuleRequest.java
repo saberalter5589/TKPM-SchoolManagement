@@ -12,4 +12,9 @@ public class UpdateRuleRequest extends BaseRequest {
     private Long finalExamRate;
     private Long firstSemRate;
     private Long secondSemRate;
+    private Double badAverage;
+    private Double avgAverage;
+    private Double goodAverage;
+    private Double veryGoodAverage;
+    private Double excellentAverage;
 }

@@ -1,6 +1,7 @@
 package school.management.school_management_be.mapper;
 
 import school.management.school_management_be.dto.obj.ClassTypeDto;
+import school.management.school_management_be.dto.obj.StudentRankStatisticDto;
 import school.management.school_management_be.dto.obj.StudentSemesterScoreStatisticDto;
 import school.management.school_management_be.dto.obj.StudentSubjectScoreStatisticDto;
 import school.management.school_management_be.util.CommonUtil;
@@ -86,6 +87,33 @@ public class StatisticDxo {
             }
         }
         dto.setFinalSemAvgScore(obj[4] != null ? ObjectUtil.getValueOfDouble(obj[4]) : null);
+        dto.setRank(obj[5] != null ? ObjectUtil.getValueOfLong(obj[5]) : null);
+        return dto;
+    }
+
+    public static StudentRankStatisticDto convertToDto(Long studentCount, List<Object[]> rankCountObjList){
+        StudentRankStatisticDto dto = new StudentRankStatisticDto();
+        dto.setTotalStudentCount(studentCount);
+
+        if(!CommonUtil.isNullOrEmpty(rankCountObjList)){
+            for(Object[] obj : rankCountObjList){
+                Long rankType = obj[0] != null ? ObjectUtil.getValueOfLong(obj[0]) : null;
+                if(rankType == null){
+                    continue;
+                }
+                if (rankType == 0L) {
+                    dto.setBadCount(obj[1] != null ? ObjectUtil.getValueOfLong(obj[1]) : null);
+                } else if (rankType == 1L) {
+                    dto.setAvgCount(obj[1] != null ? ObjectUtil.getValueOfLong(obj[1]) : null);
+                } else if (rankType == 2L) {
+                    dto.setGoodCount(obj[1] != null ? ObjectUtil.getValueOfLong(obj[1]) : null);
+                } else if (rankType == 3L) {
+                    dto.setVeryGoodCount(obj[1] != null ? ObjectUtil.getValueOfLong(obj[1]) : null);
+                } else if (rankType == 4L) {
+                    dto.setExcellentCount(obj[1] != null ? ObjectUtil.getValueOfLong(obj[1]) : null);
+                }
+            }
+        }
         return dto;
     }
 }

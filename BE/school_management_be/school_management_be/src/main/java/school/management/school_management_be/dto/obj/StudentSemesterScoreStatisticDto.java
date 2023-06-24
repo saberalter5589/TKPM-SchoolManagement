@@ -10,4 +10,5 @@ public class StudentSemesterScoreStatisticDto {
     Double firstSemAvgScore;
     Double secondSemAvgScore;
     Double finalSemAvgScore;
+    Long rank;
 }

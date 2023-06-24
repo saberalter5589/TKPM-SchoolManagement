@@ -28,9 +28,15 @@ public class ClassRepositoryCustomImpl implements ClassRepositoryCustom {
                 "sc.class_name,\n" +
                 "sc.max_student_num,\n" +
                 "sc.description,\n" +
-                "sc.note ");
+                "sc.note, std_info.std_count ");
         sql.append("FROM s_class sc ");
         sql.append("LEFT JOIN class_type ct ON sc.class_type_id = ct.class_type_id AND ct.is_deleted = false ");
+        sql.append("LEFT JOIN (");
+        sql.append("SELECT std.class_id, COUNT(std.student_id) as std_count " +
+                "FROM student std " +
+                "WHERE std.is_deleted = false " +
+                "GROUP BY std.class_id ");
+        sql.append(") as std_info ON sc.class_id = std_info.class_id ");
         sql.append("WHERE sc.is_deleted = false ");
 
         if(request.getClassId() != null){

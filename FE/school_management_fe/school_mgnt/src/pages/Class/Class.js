@@ -170,6 +170,7 @@ const Class = () => {
               <th scope="col">Class Code</th>
               <th scope="col">Class Name</th>
               <th scope="col">Class Type Name</th>
+              <th scope="col">Student count</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -183,6 +184,7 @@ const Class = () => {
                   <td>{curClass?.classCode}</td>
                   <td>{curClass?.className}</td>
                   <td>{curClass?.classTypeDto?.classTypeName}</td>
+                  <td>{curClass?.studentCount}</td>
                   <td>
                     <Link
                       className="btn btn-success"

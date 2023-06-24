@@ -12,4 +12,9 @@ public class RuleDto {
     Long finalExamRate;
     Long firstSemRate;
     Long secondSemRate;
+    Double badAverage;
+    Double avgAverage;
+    Double goodAverage;
+    Double veryGoodAverage;
+    Double excellentAverage;
 }

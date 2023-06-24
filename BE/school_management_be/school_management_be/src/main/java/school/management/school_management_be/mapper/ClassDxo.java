@@ -38,6 +38,7 @@ public class ClassDxo {
         dto.setMaxStudentNum(obj[7] != null ? ObjectUtil.getValueOfLong(obj[7]) : null);
         dto.setDescription(obj[8] != null ? ObjectUtil.getValueOfString(obj[8]) : null);
         dto.setNote(obj[9] != null ? ObjectUtil.getValueOfString(obj[9]) : null);
+        dto.setStudentCount(obj[10] != null ? ObjectUtil.getValueOfLong(obj[10]) : 0);
         return dto;
     }
 }

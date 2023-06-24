@@ -14,6 +14,7 @@ const StudentStatistic = () => {
   const [studentData, setStudentData] = useState([]);
   const [className, setClassName] = useState([]);
   const [studentName, setStudentName] = useState([]);
+  const [passResult, setPassResult] = useState("");
 
   useEffect(() => {
     if (userInfo == null || userInfo?.userTypeId != STAFF) {
@@ -40,6 +41,12 @@ const StudentStatistic = () => {
     setClassName(response?.data?.className);
     setStudentName(response?.data?.studentName);
     setStudentData(response?.data?.subjectDtoList);
+
+    const totalSubject = response?.data?.subjectDtoList?.length;
+    const totalPass = response?.data?.subjectDtoList?.filter(
+      (s) => s.result == 0
+    )?.length;
+    setPassResult(totalPass + "/" + totalSubject);
   };
 
   const renderResult = (val) => {
@@ -56,6 +63,7 @@ const StudentStatistic = () => {
       <h2>Student Statistic</h2>
       <h5>Student name: {studentName}</h5>
       <h5>Class name: {className}</h5>
+      <h5>Total pass: {passResult}</h5>
       <div className="py-4">
         <table className="table border shadow">
           <thead>

@@ -11,4 +11,5 @@ public class ClassDto {
     Long maxStudentNum;
     String description;
     String note;
+    Long studentCount;
 }

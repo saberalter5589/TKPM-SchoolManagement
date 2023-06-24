@@ -27,3 +27,18 @@ export const convertFromDateToString = (src) => {
 export const convertFromStringToDate = (src) => {
   return new Date(src + "T00:00:00");
 };
+
+export const getRank = (rank) => {
+  switch (rank) {
+    case 0:
+      return "BAD";
+    case 1:
+      return "AVERAGE";
+    case 2:
+      return "GOOD";
+    case 3:
+      return "VERY GOOD";
+    case 4:
+      return "EXCELLENT";
+  }
+};

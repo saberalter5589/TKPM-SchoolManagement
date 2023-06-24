@@ -31,6 +31,11 @@ public class RuleServiceImpl implements RuleService {
         ruleDto.setFinalExamRate(rule.getFinalExamRate());
         ruleDto.setFirstSemRate(rule.getFirstSemRate());
         ruleDto.setSecondSemRate(rule.getSecondSemRate());
+        ruleDto.setBadAverage(rule.getBadAverage());
+        ruleDto.setAvgAverage(rule.getAvgAverage());
+        ruleDto.setGoodAverage(rule.getGoodAverage());
+        ruleDto.setVeryGoodAverage(rule.getVeryGoodAverage());
+        ruleDto.setExcellentAverage(rule.getExcellentAverage());
 
         GetRuleResponse response = new GetRuleResponse();
         response.setRuleDto(ruleDto);
@@ -49,6 +54,11 @@ public class RuleServiceImpl implements RuleService {
         rule.setFinalExamRate(request.getFinalExamRate());
         rule.setFirstSemRate(request.getFirstSemRate());
         rule.setSecondSemRate(request.getSecondSemRate());
+        rule.setBadAverage(request.getBadAverage());
+        rule.setAvgAverage(request.getAvgAverage());
+        rule.setGoodAverage(request.getGoodAverage());
+        rule.setVeryGoodAverage(request.getVeryGoodAverage());
+        rule.setExcellentAverage(request.getExcellentAverage());
 
         EntityDxo.preUpdate(0L, rule);
         ruleRepository.save(rule);

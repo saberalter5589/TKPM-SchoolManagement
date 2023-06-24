@@ -16,16 +16,21 @@ public class Rule extends BaseEntity {
     private Long minAge;
 
     private Long maxAge;
-
     @Column(name="test_15_rate")
     private Long test15Rate;
-
     @Column(name="test_45_rate")
     private Long test45Rate;
-
     private Long finalExamRate;
-
     private Long firstSemRate;
-
     private Long secondSemRate;
+    @Column(name="bad_avg")
+    private Double badAverage;
+    @Column(name="avg_avg")
+    private Double avgAverage;
+    @Column(name="good_avg")
+    private Double goodAverage;
+    @Column(name="very_good_avg")
+    private Double veryGoodAverage;
+    @Column(name="excellent_avg")
+    private Double excellentAverage;
 }
