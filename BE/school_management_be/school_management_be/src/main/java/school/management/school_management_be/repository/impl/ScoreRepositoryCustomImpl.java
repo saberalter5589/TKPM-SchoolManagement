@@ -104,6 +104,78 @@ public class ScoreRepositoryCustomImpl implements ScoreRepositoryCustom {
         return dbResult;
     }
 
+    @Override
+    public List<Object[]> getAllClassRankStatistic(Rule rule) {
+        HashMap<String, Object> params = new HashMap<>();
+        StringBuilder sql = new StringBuilder();
+        buildGetAllClassRankStatistic(sql);
+        params.put("badAvg", rule.getBadAverage());
+        params.put("avgAvg", rule.getAvgAverage());
+        params.put("goodAvg", rule.getGoodAverage());
+        params.put("veryGoodAvg", rule.getVeryGoodAverage());
+
+        Query query = entityManager.createNativeQuery(sql.toString());
+        QueryUtil.setParamsToQuery(query, params);
+        List<Object[]> dbResult = query.getResultList();
+        return dbResult;
+    }
+
+    private void buildGetAllClassRankStatistic(StringBuilder sql){
+        sql.append("WITH SUBJECT_SCORE_VIEW AS " +
+                "(SELECT SV.STUDENT_ID, SV.SUBJECT_ID, SV.SEMESTER," +
+                "SUM (CASE SV.SCORE_TYPE " +
+                " WHEN 0 THEN ROUND(SV.SCORE * SV.TEST_15_RATE, 2) " +
+                " WHEN 1 THEN ROUND(SV.SCORE * SV.TEST_45_RATE, 2) " +
+                " WHEN 2 THEN ROUND(SV.SCORE * SV.FINAL_EXAM_RATE, 2) " +
+                " ELSE 0 END) AS REFINED_SCORE," +
+                "SV.FIRST_SEM_RATE," +
+                "SV.SECOND_SEM_RATE " +
+                "FROM SCORE_VIEW SV " +
+                "GROUP BY SV.STUDENT_ID, SV.SUBJECT_ID, SV.SEMESTER, SV.FIRST_SEM_RATE, SV.SECOND_SEM_RATE),");
+        sql.append("SEMESTER_SCORE_VIEW AS " +
+                "(SELECT SSV.STUDENT_ID, SSV.SEMESTER, ROUND(AVG(SSV.REFINED_SCORE), 2) AS SEM_AVG, " +
+                "SSV.FIRST_SEM_RATE, SSV.SECOND_SEM_RATE " +
+                "FROM SUBJECT_SCORE_VIEW SSV " +
+                "GROUP BY SSV.STUDENT_ID,SSV.SEMESTER,SSV.FIRST_SEM_RATE,SSV.SECOND_SEM_RATE " +
+                "ORDER BY SSV.STUDENT_ID, SSV.SEMESTER),");
+        sql.append("CLASS_SCORE_VIEW AS (" +
+                "SELECT STD.CLASS_ID, SMSV.STUDENT_ID, STD.FIRST_NAME,STD.LAST_NAME," +
+                "STRING_AGG(SMSV.SEMESTER || '#' || SMSV.SEM_AVG,',') AS SEM_AVG_SCORE," +
+                "SUM(CASE SMSV.SEMESTER" +
+                "       WHEN 1 THEN ROUND(SMSV.SEM_AVG * SMSV.FIRST_SEM_RATE,2) " +
+                "       WHEN 2 THEN ROUND(SMSV.SEM_AVG * SMSV.SECOND_SEM_RATE,2) " +
+                "   ELSE 0 END) AS FINAL_AVG " +
+                "FROM SEMESTER_SCORE_VIEW SMSV " +
+                "JOIN STUDENT STD ON STD.STUDENT_ID = SMSV.STUDENT_ID " +
+                "AND STD.IS_DELETED = FALSE " +
+                "GROUP BY SMSV.STUDENT_ID,STD.FIRST_NAME,STD.LAST_NAME,STD.CLASS_ID " +
+                "ORDER BY STD.CLASS_ID, SMSV.STUDENT_ID),");
+        sql.append("FIN_CLASS_RANK_STAT_VIEW AS (" +
+                "SELECT CLSV.CLASS_ID,CLS.CLASS_CODE,  CLS.CLASS_NAME, CLS_STD.std_count," +
+                "CASE WHEN CLSV.FINAL_AVG < :badAvg THEN 0" +
+                "     WHEN CLSV.FINAL_AVG >= :badAvg AND CLSV.FINAL_AVG < :avgAvg THEN 1 " +
+                "     WHEN CLSV.FINAL_AVG >= :avgAvg AND CLSV.FINAL_AVG < :goodAvg THEN 2 " +
+                "     WHEN CLSV.FINAL_AVG >= :goodAvg AND CLSV.FINAL_AVG < :veryGoodAvg THEN 3 " +
+                "     ELSE 4 END AS S_RANK," +
+                "COUNT (*) as rank_count " +
+                "FROM CLASS_SCORE_VIEW CLSV " +
+                "LEFT JOIN S_CLASS CLS ON CLSV.class_id = CLS.class_id " +
+                "LEFT JOIN ( " +
+                "SELECT std.class_id, " +
+                "COUNT (std.student_id) AS std_count " +
+                "FROM student std " +
+                "WHERE std.is_deleted = false " +
+                "GROUP BY std.class_id " +
+                ") CLS_STD ON CLS_STD.class_id = CLSV.class_id " +
+                "GROUP BY CLSV.CLASS_ID,CLS.CLASS_CODE, CLS.CLASS_NAME, CLS_STD.std_count, S_RANK " +
+                "ORDER BY CLSV.CLASS_ID, S_RANK ASC ) ");
+        sql.append("SELECT CLS.CLASS_ID, CLS.CLASS_CODE, CLS.CLASS_NAME, FIN_VIEW.STD_COUNT," +
+                "STRING_AGG(FIN_VIEW.S_RANK || '#' || FIN_VIEW.RANK_COUNT,',') " +
+                "FROM S_CLASS CLS " +
+                "LEFT JOIN FIN_CLASS_RANK_STAT_VIEW FIN_VIEW ON CLS.CLASS_ID = FIN_VIEW.CLASS_ID " +
+                "GROUP BY CLS.CLASS_ID, CLS.CLASS_CODE, CLS.CLASS_NAME, FIN_VIEW.STD_COUNT ");
+    }
+
     private void buildGetClassStatisticWithQuery(StringBuilder sql){
         sql.append("WITH SUBJECT_SCORE_VIEW AS (");
         sql.append("SELECT SV.STUDENT_ID, SV.SUBJECT_ID, SV.SEMESTER, ");

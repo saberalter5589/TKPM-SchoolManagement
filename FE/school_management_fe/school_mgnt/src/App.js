@@ -22,6 +22,7 @@ import StudentDetail from "./pages/Student/StudentDetail";
 import ScoreDetail from "./pages/Student/ScoreDetail";
 import ClassStatistic from "./pages/Statistic/ClassStatistic";
 import StudentStatistic from "./pages/Statistic/StudentStatistic";
+import ClassStatisticAll from "./pages/Statistic/ClassStatisticAll";
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -54,6 +55,7 @@ function App() {
           <Route path="/score-detail/:id" element={<ScoreDetail />} />
           <Route path="/class-statistic/" element={<ClassStatistic />} />
           <Route path="/student-statistic/:id" element={<StudentStatistic />} />
+          <Route path="/class-statistic-all/" element={<ClassStatisticAll />} />
         </Routes>
       </BrowserRouter>
     </div>

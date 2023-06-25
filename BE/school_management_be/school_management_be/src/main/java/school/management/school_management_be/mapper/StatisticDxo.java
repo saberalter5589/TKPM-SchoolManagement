@@ -1,9 +1,6 @@
 package school.management.school_management_be.mapper;
 
-import school.management.school_management_be.dto.obj.ClassTypeDto;
-import school.management.school_management_be.dto.obj.StudentRankStatisticDto;
-import school.management.school_management_be.dto.obj.StudentSemesterScoreStatisticDto;
-import school.management.school_management_be.dto.obj.StudentSubjectScoreStatisticDto;
+import school.management.school_management_be.dto.obj.*;
 import school.management.school_management_be.util.CommonUtil;
 import school.management.school_management_be.util.ObjectUtil;
 
@@ -115,5 +112,40 @@ public class StatisticDxo {
             }
         }
         return dto;
+    }
+
+    public static List<ClassRankDto> mapFromDbObjToClassRankDtoList(List<Object[]> dbObjList){
+        List<ClassRankDto> resultList = new ArrayList<>();
+        if(!CommonUtil.isNullOrEmpty(dbObjList)){
+            for(Object[] obj : dbObjList){
+                ClassRankDto rankDto = new ClassRankDto();
+
+                rankDto.setClassId(obj[0] != null ? ObjectUtil.getValueOfLong(obj[0]) : null);
+                rankDto.setClassCode(obj[1] != null ? ObjectUtil.getValueOfString(obj[1]) : null);
+                rankDto.setClassName(obj[2] != null ? ObjectUtil.getValueOfString(obj[2]) : null);
+                rankDto.setTotalStudentCount(obj[3] != null ? ObjectUtil.getValueOfLong(obj[3]) : 0);
+                if(!CommonUtil.isNullOrWhitespace(ObjectUtil.getValueOfString(obj[4]))){
+                    String[] rankInfos = ObjectUtil.getValueOfString(obj[4]).split(",");
+                    for(String avgInfo : rankInfos){
+                        String[] infos = avgInfo.split("#");
+                        Long rank = ObjectUtil.getValueOfLong(infos[0]) ;
+                        Long count = ObjectUtil.getValueOfLong(infos[1]) ;
+                        if(rank == 0L){
+                            rankDto.setBadCount(count);
+                        } else if (rank == 1L) {
+                            rankDto.setAvgCount(count);
+                        } else if (rank == 2L) {
+                            rankDto.setGoodCount(count);
+                        } else if (rank == 3L) {
+                            rankDto.setVeryGoodCount(count);
+                        }else if (rank == 4L) {
+                            rankDto.setExcellentCount(count);
+                        }
+                    }
+                }
+                resultList.add(rankDto);
+            }
+        }
+        return resultList;
     }
 }

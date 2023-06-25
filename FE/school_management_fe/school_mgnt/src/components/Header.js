@@ -65,6 +65,11 @@ const Header = (props) => {
             class: "nav-link",
           },
           {
+            to: "/class-statistic-all",
+            name: "Statistic (Rank)",
+            class: "nav-link",
+          },
+          {
             to: "/login",
             name: "Logout",
             class: "nav-link",

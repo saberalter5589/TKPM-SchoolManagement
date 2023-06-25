@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import school.management.school_management_be.common.UserRole;
+import school.management.school_management_be.dto.request.statistic.GetClassRankStatisticRequest;
 import school.management.school_management_be.dto.request.statistic.GetClassStatisticRequest;
 import school.management.school_management_be.dto.request.statistic.GetStudentStatisticRequest;
 import school.management.school_management_be.dto.request.student.GetStudentRequest;
+import school.management.school_management_be.dto.response.statistic.GetClassRankStatisticResponse;
 import school.management.school_management_be.dto.response.statistic.GetClassStatisticResponse;
 import school.management.school_management_be.dto.response.statistic.GetStudentStatisticResponse;
 import school.management.school_management_be.dto.response.student.GetStudentResponse;
@@ -54,6 +56,18 @@ public class StatisticController {
         request.setClassId(classId);
         authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
         GetClassStatisticResponse response = statisticService.getClassStatistic(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic/class/all")
+    public ResponseEntity<GetClassRankStatisticResponse> getClassStatAll(
+            @RequestHeader("userId") Long userId,
+            @RequestHeader("password") String password){
+        GetClassRankStatisticRequest request = new GetClassRankStatisticRequest();
+        request.getAuthentication().setUserId(userId);
+        request.getAuthentication().setPassword(password);
+        authenticationService.validateUser(request, Arrays.asList(UserRole.ADMIN, UserRole.STAFF));
+        GetClassRankStatisticResponse response = statisticService.getClassRankStatistic(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

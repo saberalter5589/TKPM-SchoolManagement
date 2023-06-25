@@ -2,11 +2,14 @@ package school.management.school_management_be.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import school.management.school_management_be.dto.obj.ClassRankDto;
 import school.management.school_management_be.dto.obj.StudentRankStatisticDto;
 import school.management.school_management_be.dto.obj.StudentSemesterScoreStatisticDto;
 import school.management.school_management_be.dto.obj.StudentSubjectScoreStatisticDto;
+import school.management.school_management_be.dto.request.statistic.GetClassRankStatisticRequest;
 import school.management.school_management_be.dto.request.statistic.GetClassStatisticRequest;
 import school.management.school_management_be.dto.request.statistic.GetStudentStatisticRequest;
+import school.management.school_management_be.dto.response.statistic.GetClassRankStatisticResponse;
 import school.management.school_management_be.dto.response.statistic.GetClassStatisticResponse;
 import school.management.school_management_be.dto.response.statistic.GetStudentStatisticResponse;
 import school.management.school_management_be.entity.Rule;
@@ -76,6 +79,17 @@ public class StatisticServiceImpl implements StatisticService {
         GetClassStatisticResponse response = new GetClassStatisticResponse();
         response.setStudentRankStatisticDto(rankStatisticDto);
         response.setSemesterDtoList(dto);
+        return response;
+    }
+
+    @Override
+    public GetClassRankStatisticResponse getClassRankStatistic(GetClassRankStatisticRequest request) {
+        List<Rule> ruleList = ruleRepository.findAll();
+        Rule rule = ruleList.get(0);
+        List<Object[]> dbList = scoreRepository.getAllClassRankStatistic(rule);
+        List<ClassRankDto> rankDtoList = StatisticDxo.mapFromDbObjToClassRankDtoList(dbList);
+        GetClassRankStatisticResponse response = new GetClassRankStatisticResponse();
+        response.setClassRankDtoList(rankDtoList);
         return response;
     }
 }

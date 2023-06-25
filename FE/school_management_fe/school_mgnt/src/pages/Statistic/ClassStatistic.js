@@ -1,11 +1,9 @@
-import { useEffect, useState, useRef } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { STAFF } from "../../commons/constant";
 import axios from "axios";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserInfoFromLocalStorage, getRank } from "../../commons/utils";
-import * as echarts from "echarts";
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
